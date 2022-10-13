@@ -1,8 +1,0 @@
-pip install SpeechRecognition
-1. SpeechRecognition
-This library performs speech recognition. It’ll help the assistant listen to our commands, understand them, and act accordingly.
-
-pip install pyttsx3
-2. Python Text-To-Speech (pyttsx3)
-This is the Text-to-Speech (TTS) library for Python 2 and Python 3 and works without an internet connection or any delay.
-
