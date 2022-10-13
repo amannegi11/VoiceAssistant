@@ -1,4 +1,5 @@
-''' Basic python coding for sky(voice assistant name) bot'''
+''' Basic python coding for sky(voice assistant name) bot
+@author:Aman'''
 
 
 #import libraries
@@ -8,13 +9,8 @@ from flask import Flask, render_template, redirect
 from flask_cors import cross_origin
 import speech_recognition as sr
 import pyttsx3
-import datetime
-import pyjokes
-import webbrowser
-import wikipedia
-import names
 
-
+months={'1':'January','2':'February','3':'March','4':'April','5':'May','6':'June','7':'July','8':'August','9':'September','10':'October','11':'November','12':'December'}
 
 listener = sr.Recognizer()
 
@@ -52,6 +48,13 @@ def user_commands():
 #voice assistant output function
 def run_sky():
     import pywhatkit
+    import datetime
+    import pyjokes
+    import webbrowser
+    import wikipedia
+    import names
+    import calendar
+
     #logging_fun()
     #logging.info("inside run_sky function")
     try:
@@ -60,7 +63,7 @@ def run_sky():
         command = user_commands()
 
 
-        # most asked question from google Assistant
+        #most asked question from google Assistant
         if 'hello' in command:
             engine_talk("hello sir")
         elif 'how are you' in command:
@@ -105,11 +108,11 @@ def run_sky():
             #logging.info("user asking for time")
             time = datetime.datetime.now().strftime('%I:%M %p')
             engine_talk('Current time is ' + time)
-            logging.info("assitant got his output")
+            #logging.info("assitant got his output")
 
 
         #weather report
-        elif 'weather' in command:
+        elif 'weather' in command or 'whether' in command:
             #logging.info("user asking for weather report")
             place=command.replace('weather',"")
             engine_talk("weather of "+place)
@@ -131,6 +134,21 @@ def run_sky():
             info = wikipedia.summary(person, 1)
             engine_talk(info)
             #logging.info(info)
+
+        #Date
+        elif 'date' in command:
+            my_new_date = datetime.date.today().strftime("%d %m %Y")
+            my_new_date = my_new_date.split()
+            month, date, year = my_new_date[1].lstrip('0'), my_new_date[0].lstrip('0'), my_new_date[2]
+            month = months[month]
+            full_date = 'Today is {} {} {}'.format(month, date, year)
+            engine_talk(full_date)
+
+        #Day
+        elif 'day' in command :
+            my_date = datetime.date.today()
+            weekday = calendar.day_name[my_date.weekday()]
+            engine_talk(weekday)
 
         #location
         elif "where is" in command:
@@ -186,3 +204,5 @@ def submit():
 
 if __name__ == "__main__":
     app.run(debug=True,port=7000)
+    
+    
